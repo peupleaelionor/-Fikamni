@@ -1,0 +1,41 @@
+{
+  "brand": {
+    "name": "Fikamni",
+    "tagline": "L'argent qui arrive, en entier, chez les siens."
+  },
+  "hero": {
+    "eyebrow": "MVP comparateur diaspora",
+    "title": "Comparez le vrai coût de vos transferts en quelques secondes.",
+    "description": "Fikamni classe les offres selon le coût réel: frais visibles + marge de change + frais côté réception."
+  },
+  "controls": {
+    "language": "Langue",
+    "corridor": "Couloir",
+    "amount": "Montant envoyé",
+    "amountHint": "Montant débité hors calculateur: modifiable instantanément",
+    "reset": "Réinitialiser"
+  },
+  "summary": {
+    "results": "offres comparées",
+    "best": "Meilleure offre",
+    "send": "Vous envoyez",
+    "receive": "Montant reçu"
+  },
+  "offer": {
+    "realCost": "Coût réel",
+    "directFees": "Frais visibles",
+    "hiddenFx": "Coût caché du change",
+    "receiveFees": "Frais réception",
+    "debited": "Montant débité",
+    "effectiveRate": "Taux effectif",
+    "speed": "Délai",
+    "method": "Retrait / réception",
+    "bestBadge": "Meilleur rapport coût / réception",
+    "marketMax": "Maximum au taux du marché"
+  },
+  "payout": {
+    "bank": "Virement bancaire",
+    "cash": "Retrait cash",
+    "mobile": "Wallet mobile"
+  }
+}
