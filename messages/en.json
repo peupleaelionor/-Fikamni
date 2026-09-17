@@ -1,41 +1,40 @@
 {
-  "brand": {
-    "name": "Fikamni",
-    "tagline": "Money that arrives, whole, to loved ones."
-  },
-  "hero": {
-    "eyebrow": "Diaspora transfer MVP",
-    "title": "Compare the real cost of your transfers in seconds.",
-    "description": "Fikamni ranks offers using real cost: visible fees + FX markup + receiving-side fees."
-  },
   "controls": {
     "language": "Language",
-    "corridor": "Corridor",
+    "from": "Sending country",
+    "to": "Receiving country",
     "amount": "Amount sent",
-    "amountHint": "Send amount updates the comparator instantly",
-    "reset": "Reset"
+    "amountHint": "Change the amount: the ranking updates instantly.",
+    "reset": "Reset amount"
   },
   "summary": {
-    "results": "offers compared",
+    "results": "Offers compared",
     "best": "Best offer",
+    "none": "No offer available",
     "send": "You send",
     "receive": "Amount received"
   },
   "offer": {
     "realCost": "Real cost",
-    "directFees": "Visible fees",
     "hiddenFx": "Hidden FX cost",
     "receiveFees": "Receiving fees",
     "debited": "Amount charged",
-    "effectiveRate": "Effective rate",
     "speed": "Speed",
     "method": "Payout method",
     "bestBadge": "Best value",
-    "marketMax": "Maximum at market rate"
+    "marketMax": "Maximum at market rate",
+    "cta": "See offer",
+    "affiliateNote": "Disclosure: some \"See offer\" links are affiliate links. Fikamni may earn a commission at no extra cost to you, with no impact on the ranking."
   },
   "payout": {
     "bank": "Bank transfer",
     "cash": "Cash pickup",
     "mobile": "Mobile wallet"
+  },
+  "data": {
+    "updated": "Last updated",
+    "sourceDemo": "Demo data (not real-time)",
+    "sourceRates": "Rates",
+    "sourceTariffs": "Tariffs"
   }
 }

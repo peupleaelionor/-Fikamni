@@ -1,4 +1,9 @@
-export type CurrencyCode = 'EUR' | 'GBP' | 'XAF' | 'XOF' | 'NGN';
+// Devises d'envoi (zone euro, Royaume-Uni, États-Unis, Canada) et devises de
+// réception (Phase 1 : 10 pays africains). On garde une union fermée pour que
+// TypeScript détecte toute devise oubliée dans les tables de taux et de tarifs.
+export type SendCurrencyCode = 'EUR' | 'GBP' | 'USD' | 'CAD';
+export type ReceiveCurrencyCode = 'XAF' | 'XOF' | 'NGN' | 'CDF' | 'MAD' | 'GHS' | 'KES';
+export type CurrencyCode = SendCurrencyCode | ReceiveCurrencyCode;
 export type Locale = 'fr' | 'en';
 export type PayoutMethod = 'bank' | 'cash' | 'mobile';
 

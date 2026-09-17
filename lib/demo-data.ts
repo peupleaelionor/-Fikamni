@@ -1,183 +1,67 @@
-import {rankTransferOffers, type Locale, type PayoutMethod, type RankedTransferOffer, type TransferOfferInput} from '@/lib/engine';
+import type {CurrencyCode} from '@/lib/engine';
 
-export interface CorridorDefinition {
-  id: 'fr-congo' | 'fr-senegal' | 'uk-nigeria';
-  localeLabels: Record<Locale, string>;
-  sendCurrency: 'EUR' | 'GBP';
-  receiveCurrency: 'XAF' | 'XOF' | 'NGN';
-  defaultAmount: number;
-  countryFlag: string;
-}
+/**
+ * Données démonstration — FALLBACK.
+ *
+ * Tant que les scripts `fetch-rates` (taux mi-marché) et `ingest-rpw` (tarifs
+ * Banque Mondiale) n'ont pas produit `data/rates.json` / `data/tariffs.json`,
+ * l'application s'appuie sur ces valeurs. Elles sont réalistes mais fixes : ce
+ * ne sont PAS des taux en temps réel. La date ci-dessous est affichée comme
+ * « dernière mise à jour » des couloirs servis par la démo.
+ */
 
-interface OfferTemplate {
-  providerId: string;
-  providerName: string;
-  fixedFee: number;
-  variableFeeRate: number;
-  midMarketRate: number;
-  providerRate: number;
-  receiveFee: number;
-  speedLabel: string;
-  payoutMethod: PayoutMethod;
-}
-
-export const corridors: CorridorDefinition[] = [
-  {
-    id: 'fr-congo',
-    localeLabels: {
-      fr: 'France → Congo-Brazzaville',
-      en: 'France → Republic of the Congo'
-    },
-    sendCurrency: 'EUR',
-    receiveCurrency: 'XAF',
-    defaultAmount: 200,
-    countryFlag: '🇨🇬'
-  },
-  {
-    id: 'fr-senegal',
-    localeLabels: {
-      fr: 'France → Sénégal',
-      en: 'France → Senegal'
-    },
-    sendCurrency: 'EUR',
-    receiveCurrency: 'XOF',
-    defaultAmount: 200,
-    countryFlag: '🇸🇳'
-  },
-  {
-    id: 'uk-nigeria',
-    localeLabels: {
-      fr: 'Royaume-Uni → Nigeria',
-      en: 'United Kingdom → Nigeria'
-    },
-    sendCurrency: 'GBP',
-    receiveCurrency: 'NGN',
-    defaultAmount: 150,
-    countryFlag: '🇳🇬'
-  }
-];
-
-const offerTemplates: Record<CorridorDefinition['id'], OfferTemplate[]> = {
-  'fr-congo': [
-    {
-      providerId: 'mbote-cash',
-      providerName: 'Mbote Cash',
-      fixedFee: 2.5,
-      variableFeeRate: 0.009,
-      midMarketRate: 651,
-      providerRate: 646,
-      receiveFee: 0,
-      speedLabel: '15 min',
-      payoutMethod: 'cash'
-    },
-    {
-      providerId: 'kongo-direct',
-      providerName: 'Kongo Direct',
-      fixedFee: 1.5,
-      variableFeeRate: 0.012,
-      midMarketRate: 651,
-      providerRate: 641,
-      receiveFee: 400,
-      speedLabel: '1 h',
-      payoutMethod: 'bank'
-    },
-    {
-      providerId: 'salama-send',
-      providerName: 'Salama Send',
-      fixedFee: 3,
-      variableFeeRate: 0.004,
-      midMarketRate: 651,
-      providerRate: 648,
-      receiveFee: 0,
-      speedLabel: '20 min',
-      payoutMethod: 'mobile'
-    }
-  ],
-  'fr-senegal': [
-    {
-      providerId: 'teranga-fast',
-      providerName: 'Teranga Fast',
-      fixedFee: 1.99,
-      variableFeeRate: 0.006,
-      midMarketRate: 655,
-      providerRate: 652,
-      receiveFee: 0,
-      speedLabel: '10 min',
-      payoutMethod: 'mobile'
-    },
-    {
-      providerId: 'dakarsafe',
-      providerName: 'DakarSafe',
-      fixedFee: 0.99,
-      variableFeeRate: 0.013,
-      midMarketRate: 655,
-      providerRate: 648,
-      receiveFee: 250,
-      speedLabel: '45 min',
-      payoutMethod: 'bank'
-    },
-    {
-      providerId: 'baobab-remit',
-      providerName: 'Baobab Remit',
-      fixedFee: 2.2,
-      variableFeeRate: 0.004,
-      midMarketRate: 655,
-      providerRate: 654,
-      receiveFee: 0,
-      speedLabel: '25 min',
-      payoutMethod: 'cash'
-    }
-  ],
-  'uk-nigeria': [
-    {
-      providerId: 'naija-now',
-      providerName: 'Naija Now',
-      fixedFee: 1.2,
-      variableFeeRate: 0.009,
-      midMarketRate: 2100,
-      providerRate: 2080,
-      receiveFee: 0,
-      speedLabel: '5 min',
-      payoutMethod: 'bank'
-    },
-    {
-      providerId: 'lagos-link',
-      providerName: 'Lagos Link',
-      fixedFee: 0,
-      variableFeeRate: 0.015,
-      midMarketRate: 2100,
-      providerRate: 2068,
-      receiveFee: 500,
-      speedLabel: '20 min',
-      payoutMethod: 'mobile'
-    },
-    {
-      providerId: 'ubuntu-transfer',
-      providerName: 'Ubuntu Transfer',
-      fixedFee: 2.5,
-      variableFeeRate: 0.003,
-      midMarketRate: 2100,
-      providerRate: 2092,
-      receiveFee: 0,
-      speedLabel: '1 h',
-      payoutMethod: 'cash'
-    }
-  ]
+/** Taux mi-marché exprimés en unités de devise pour 1 EUR (base EUR, comme l'ECB). */
+export const DEMO_RATES_PER_EUR: Record<CurrencyCode, number> = {
+  // Devises d'envoi.
+  EUR: 1,
+  GBP: 0.85,
+  USD: 1.08,
+  CAD: 1.47,
+  // Devises de réception (Phase 1).
+  XOF: 655.957, // Franc CFA (UEMOA) — parité fixe avec l'euro.
+  XAF: 655.957, // Franc CFA (CEMAC) — parité fixe avec l'euro.
+  CDF: 2900, // Franc congolais.
+  MAD: 10.75, // Dirham marocain.
+  NGN: 1650, // Naira nigérian.
+  GHS: 15.8, // Cedi ghanéen.
+  KES: 155 // Shilling kényan.
 };
 
-export function getCorridorById(corridorId: CorridorDefinition['id']): CorridorDefinition {
-  return corridors.find((corridor) => corridor.id === corridorId) ?? corridors[0];
+/** Date de la photographie des taux démo (ISO 8601). */
+export const DEMO_RATES_UPDATED_AT = '2026-01-15T00:00:00.000Z';
+
+/**
+ * Profil tarifaire démo d'un prestataire, indépendant du couloir.
+ *
+ * - `fxSpreadRate` : marge de change appliquée sous le taux mi-marché
+ *   (0.01 = le prestataire donne un taux 1 % moins bon).
+ * - `receiveFeeRate` : frais côté réception exprimés en fraction du montant
+ *   reçu au taux mi-marché (0 pour la plupart). Ils sont convertis en montant
+ *   absolu dans la devise de réception au moment du calcul, ce qui les met
+ *   automatiquement à l'échelle de chaque devise.
+ */
+export interface DemoTariffProfile {
+  providerId: string;
+  fixedFee: number;
+  variableFeeRate: number;
+  fxSpreadRate: number;
+  receiveFeeRate: number;
 }
 
-export function getOffersForCorridor(corridorId: CorridorDefinition['id'], sendAmount: number): RankedTransferOffer[] {
-  const corridor = getCorridorById(corridorId);
-  const offers: TransferOfferInput[] = offerTemplates[corridor.id].map((offer) => ({
-    ...offer,
-    corridorId: corridor.id,
-    sendAmount,
-    sendCurrency: corridor.sendCurrency,
-    receiveCurrency: corridor.receiveCurrency
-  }));
+/**
+ * Tarifs démo par prestataire (appliqués à tous les couloirs). Les écarts de
+ * marge de change constituent le principal facteur de différenciation, comme
+ * dans la réalité du marché des transferts.
+ */
+export const DEMO_TARIFF_PROFILES: DemoTariffProfile[] = [
+  {providerId: 'sango-pay', fixedFee: 1.99, variableFeeRate: 0.005, fxSpreadRate: 0.008, receiveFeeRate: 0},
+  {providerId: 'baobab-remit', fixedFee: 2.9, variableFeeRate: 0.004, fxSpreadRate: 0.015, receiveFeeRate: 0},
+  {providerId: 'sahel-cash', fixedFee: 0, variableFeeRate: 0.018, fxSpreadRate: 0.022, receiveFeeRate: 0},
+  {providerId: 'teranga-money', fixedFee: 1.5, variableFeeRate: 0.009, fxSpreadRate: 0.012, receiveFeeRate: 0.002},
+  {providerId: 'kina-transfer', fixedFee: 3.5, variableFeeRate: 0.002, fxSpreadRate: 0.01, receiveFeeRate: 0.001},
+  {providerId: 'zamani-send', fixedFee: 0, variableFeeRate: 0.015, fxSpreadRate: 0.014, receiveFeeRate: 0},
+  {providerId: 'ubuntu-wallet', fixedFee: 0.99, variableFeeRate: 0.006, fxSpreadRate: 0.006, receiveFeeRate: 0}
+];
 
-  return rankTransferOffers(offers);
-}
+/** Date de la grille tarifaire démo (ISO 8601). */
+export const DEMO_TARIFFS_UPDATED_AT = '2026-01-15T00:00:00.000Z';

@@ -28,3 +28,7 @@ yarn-error.log*
 
 # typescript
 *.tsbuildinfo
+
+# données générées par les scripts (fallback démo dans le code)
+/data/rates.json
+/data/tariffs.json
