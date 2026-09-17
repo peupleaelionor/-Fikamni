@@ -1,0 +1,41 @@
+{
+  "brand": {
+    "name": "Fikamni",
+    "tagline": "Money that arrives, whole, to loved ones."
+  },
+  "hero": {
+    "eyebrow": "Diaspora transfer MVP",
+    "title": "Compare the real cost of your transfers in seconds.",
+    "description": "Fikamni ranks offers using real cost: visible fees + FX markup + receiving-side fees."
+  },
+  "controls": {
+    "language": "Language",
+    "corridor": "Corridor",
+    "amount": "Amount sent",
+    "amountHint": "Send amount updates the comparator instantly",
+    "reset": "Reset"
+  },
+  "summary": {
+    "results": "offers compared",
+    "best": "Best offer",
+    "send": "You send",
+    "receive": "Amount received"
+  },
+  "offer": {
+    "realCost": "Real cost",
+    "directFees": "Visible fees",
+    "hiddenFx": "Hidden FX cost",
+    "receiveFees": "Receiving fees",
+    "debited": "Amount charged",
+    "effectiveRate": "Effective rate",
+    "speed": "Speed",
+    "method": "Payout method",
+    "bestBadge": "Best value",
+    "marketMax": "Maximum at market rate"
+  },
+  "payout": {
+    "bank": "Bank transfer",
+    "cash": "Cash pickup",
+    "mobile": "Mobile wallet"
+  }
+}
