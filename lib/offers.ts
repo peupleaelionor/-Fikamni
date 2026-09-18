@@ -53,7 +53,8 @@ function toProviderMeta(): ProviderMeta[] {
     name: provider.name,
     payoutMethod: provider.payoutMethod,
     speedLabelFr: provider.speedLabelFr,
-    speedLabelEn: provider.speedLabelEn
+    speedLabelEn: provider.speedLabelEn,
+    speedMinutes: provider.speedMinutes
   }));
 }
 

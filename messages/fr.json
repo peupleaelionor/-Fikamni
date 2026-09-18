@@ -4,24 +4,35 @@
     "from": "Pays d'envoi",
     "to": "Pays de réception",
     "amount": "Montant envoyé",
-    "amountHint": "Modifiez le montant : le classement se recalcule instantanément.",
-    "reset": "Réinitialiser le montant"
+    "targetReceive": "Montant à recevoir",
+    "modeLabel": "Que voulez-vous fixer ?",
+    "modeSend": "J'envoie",
+    "modeReceive": "Ils reçoivent"
   },
-  "summary": {
-    "results": "Offres comparées",
-    "best": "Meilleure offre",
-    "none": "Aucune offre disponible",
-    "send": "Vous envoyez",
-    "receive": "Montant reçu"
+  "filters": {
+    "title": "Filtres rapides",
+    "mobile": "Mobile Money uniquement",
+    "cheap": "Frais réels < 2 %",
+    "fast": "Réception en moins d'1 h",
+    "none": "Aucune offre ne correspond à vos filtres."
+  },
+  "favorites": {
+    "add": "Ajouter aux favoris",
+    "remove": "Retirer des favoris",
+    "title": "Mes couloirs"
+  },
+  "trust": {
+    "independent": "Classement 100 % indépendant — trié uniquement par coût réel."
   },
   "offer": {
     "realCost": "Coût réel",
     "hiddenFx": "Coût caché du change",
-    "receiveFees": "Frais réception",
     "debited": "Montant débité",
+    "youSend": "Vous envoyez",
+    "received": "Ils reçoivent",
     "speed": "Délai",
     "method": "Retrait / réception",
-    "bestBadge": "Meilleur rapport coût / réception",
+    "bestBadge": "Meilleure offre aujourd'hui",
     "marketMax": "Maximum au taux du marché",
     "cta": "Voir l'offre",
     "affiliateNote": "Divulgation : certains liens « Voir l'offre » sont des liens d'affiliation. Fikamni peut percevoir une commission, sans surcoût pour vous et sans incidence sur le classement."
@@ -30,6 +41,13 @@
     "bank": "Virement bancaire",
     "cash": "Retrait cash",
     "mobile": "Wallet mobile"
+  },
+  "share": {
+    "title": "Partager",
+    "copy": "Copier le lien",
+    "copied": "Lien copié !",
+    "message": "La meilleure offre pour envoyer de l'argent : {provider} — j'envoie {send}, ils reçoivent {received}. Compare le coût réel sur Fikamni :",
+    "messageGeneric": "Compare le coût réel des transferts d'argent sur Fikamni :"
   },
   "data": {
     "updated": "Dernière mise à jour",

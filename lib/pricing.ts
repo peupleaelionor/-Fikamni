@@ -1,4 +1,5 @@
 import {
+  calculateRankedOffer,
   rankTransferOffers,
   type CurrencyCode,
   type Locale,
@@ -33,6 +34,7 @@ export interface ProviderMeta {
   payoutMethod: PayoutMethod;
   speedLabelFr: string;
   speedLabelEn: string;
+  speedMinutes: number;
 }
 
 /** Description minimale d'un couloir nécessaire au calcul. */
@@ -98,4 +100,74 @@ export function buildRankedOffers(
     inputs.push(tariffToOfferInput(corridor, tariff, provider, sendAmount, locale));
   }
   return rankTransferOffers(inputs);
+}
+
+/**
+ * Mode inversé : « combien dois-je envoyer pour qu'ils reçoivent `targetReceive` ? ».
+ *
+ * Pour chaque prestataire, on résout le montant à envoyer tel que le montant reçu
+ * égale la cible. Comme les frais côté réception dépendent eux-mêmes du montant
+ * envoyé (fraction du montant reçu au taux mi-marché), on résout :
+ *   reçu = envoi × (tauxFournisseur − tauxReception × tauxMiMarché) = cible
+ * Les offres sont classées par montant débité croissant (le moins cher pour
+ * délivrer la cible), puis par montant reçu décroissant.
+ */
+export function buildRankedOffersForTarget(
+  corridor: CorridorPricing,
+  tariffs: CorridorTariff[],
+  providersById: Map<string, ProviderMeta>,
+  targetReceive: number,
+  locale: Locale
+): RankedTransferOffer[] {
+  const results: RankedTransferOffer[] = [];
+  for (const tariff of tariffs) {
+    const provider = providersById.get(tariff.providerId);
+    if (!provider) {
+      continue;
+    }
+    const denominator = corridor.midMarketRate * (1 - tariff.fxSpreadRate - tariff.receiveFeeRate);
+    if (denominator <= 0) {
+      continue; // Configuration tarifaire dégénérée : on ignore l'offre.
+    }
+    const requiredSend = roundToTwo(targetReceive / denominator);
+    if (!(requiredSend > 0)) {
+      continue;
+    }
+    results.push(calculateRankedOffer(tariffToOfferInput(corridor, tariff, provider, requiredSend, locale)));
+  }
+
+  return results.sort((left, right) => {
+    if (left.debitedAmount !== right.debitedAmount) {
+      return left.debitedAmount - right.debitedAmount;
+    }
+    return right.recipientAmount - left.recipientAmount;
+  });
+}
+
+/** Filtres rapides appliqués côté client sur les offres déjà classées. */
+export interface OfferFilters {
+  /** Ne garder que les réceptions par wallet mobile. */
+  mobileOnly?: boolean;
+  /** Coût réel maximal en fraction du montant envoyé (ex. 0.02 = 2 %). */
+  maxFeeRate?: number;
+  /** Délai de réception maximal en minutes (ex. 60 = moins d'une heure). */
+  maxSpeedMinutes?: number;
+}
+
+/** Indique si une offre passe les filtres (le délai vient des métadonnées prestataire). */
+export function passesFilters(offer: RankedTransferOffer, speedMinutes: number, filters: OfferFilters): boolean {
+  if (filters.mobileOnly && offer.payoutMethod !== 'mobile') {
+    return false;
+  }
+  if (
+    filters.maxFeeRate !== undefined &&
+    offer.sendAmount > 0 &&
+    offer.totalRealCost / offer.sendAmount > filters.maxFeeRate
+  ) {
+    return false;
+  }
+  if (filters.maxSpeedMinutes !== undefined && speedMinutes > filters.maxSpeedMinutes) {
+    return false;
+  }
+  return true;
 }

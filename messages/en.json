@@ -4,24 +4,35 @@
     "from": "Sending country",
     "to": "Receiving country",
     "amount": "Amount sent",
-    "amountHint": "Change the amount: the ranking updates instantly.",
-    "reset": "Reset amount"
+    "targetReceive": "Amount to receive",
+    "modeLabel": "What do you want to set?",
+    "modeSend": "I send",
+    "modeReceive": "They receive"
   },
-  "summary": {
-    "results": "Offers compared",
-    "best": "Best offer",
-    "none": "No offer available",
-    "send": "You send",
-    "receive": "Amount received"
+  "filters": {
+    "title": "Quick filters",
+    "mobile": "Mobile Money only",
+    "cheap": "Real cost < 2%",
+    "fast": "Received in under 1h",
+    "none": "No offer matches your filters."
+  },
+  "favorites": {
+    "add": "Add to favorites",
+    "remove": "Remove from favorites",
+    "title": "My corridors"
+  },
+  "trust": {
+    "independent": "100% independent ranking — sorted by real cost only."
   },
   "offer": {
     "realCost": "Real cost",
     "hiddenFx": "Hidden FX cost",
-    "receiveFees": "Receiving fees",
     "debited": "Amount charged",
+    "youSend": "You send",
+    "received": "They receive",
     "speed": "Speed",
     "method": "Payout method",
-    "bestBadge": "Best value",
+    "bestBadge": "Best offer today",
     "marketMax": "Maximum at market rate",
     "cta": "See offer",
     "affiliateNote": "Disclosure: some \"See offer\" links are affiliate links. Fikamni may earn a commission at no extra cost to you, with no impact on the ranking."
@@ -30,6 +41,13 @@
     "bank": "Bank transfer",
     "cash": "Cash pickup",
     "mobile": "Mobile wallet"
+  },
+  "share": {
+    "title": "Share",
+    "copy": "Copy link",
+    "copied": "Link copied!",
+    "message": "The best deal to send money: {provider} — I send {send}, they receive {received}. Compare the real cost on Fikamni:",
+    "messageGeneric": "Compare the real cost of money transfers on Fikamni:"
   },
   "data": {
     "updated": "Last updated",

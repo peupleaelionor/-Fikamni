@@ -19,6 +19,8 @@ export interface Provider {
   payoutMethod: PayoutMethod;
   speedLabelFr: string;
   speedLabelEn: string;
+  /** Délai de réception en minutes — permet le tri et le filtre « réception rapide ». */
+  speedMinutes: number;
   /** URL d'affiliation de base vers laquelle `/go/[provider]` redirige. */
   affiliateBaseUrl: string;
 }
@@ -30,6 +32,7 @@ export const providers: Provider[] = [
     payoutMethod: 'mobile',
     speedLabelFr: 'Quelques minutes',
     speedLabelEn: 'A few minutes',
+    speedMinutes: 5,
     affiliateBaseUrl: 'https://www.sango-pay.example/envoyer'
   },
   {
@@ -38,6 +41,7 @@ export const providers: Provider[] = [
     payoutMethod: 'bank',
     speedLabelFr: '1 h',
     speedLabelEn: '1 hr',
+    speedMinutes: 60,
     affiliateBaseUrl: 'https://www.baobab-remit.example/transfer'
   },
   {
@@ -46,6 +50,7 @@ export const providers: Provider[] = [
     payoutMethod: 'cash',
     speedLabelFr: '15 min',
     speedLabelEn: '15 min',
+    speedMinutes: 15,
     affiliateBaseUrl: 'https://www.sahel-cash.example/send'
   },
   {
@@ -54,6 +59,7 @@ export const providers: Provider[] = [
     payoutMethod: 'mobile',
     speedLabelFr: '20 min',
     speedLabelEn: '20 min',
+    speedMinutes: 20,
     affiliateBaseUrl: 'https://www.teranga-money.example/go'
   },
   {
@@ -62,6 +68,7 @@ export const providers: Provider[] = [
     payoutMethod: 'bank',
     speedLabelFr: '2 h',
     speedLabelEn: '2 hrs',
+    speedMinutes: 120,
     affiliateBaseUrl: 'https://www.kina-transfer.example/start'
   },
   {
@@ -70,6 +77,7 @@ export const providers: Provider[] = [
     payoutMethod: 'bank',
     speedLabelFr: '10 min',
     speedLabelEn: '10 min',
+    speedMinutes: 10,
     affiliateBaseUrl: 'https://www.zamani-send.example/pay'
   },
   {
@@ -78,6 +86,7 @@ export const providers: Provider[] = [
     payoutMethod: 'mobile',
     speedLabelFr: 'Instantané',
     speedLabelEn: 'Instant',
+    speedMinutes: 1,
     affiliateBaseUrl: 'https://www.ubuntu-wallet.example/remit'
   }
 ];

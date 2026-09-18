@@ -35,6 +35,27 @@ Fikamni classe les offres selon le **coût réel** (frais visibles + marge de ch
 - **10 pays de réception** : Congo (RDC), Sénégal, Côte d'Ivoire, Mali, Cameroun,
   Congo-Brazzaville, Maroc, Nigeria, Ghana, Kenya.
 
+## Fonctionnalités du comparateur (rétention & acquisition)
+
+- **Calculateur multi-montants** : boutons rapides 50 / 100 / 200 / 500 / 1000 + champ libre.
+- **Mode inversé** : « combien envoyer pour qu'ils reçoivent X ? » (classement par montant débité).
+- **Filtres rapides** : Mobile Money uniquement, coût réel < 2 %, réception en moins d'1 h.
+- **Favoris de couloirs** : « Mes couloirs » mémorisés dans le navigateur (localStorage).
+- **Historique des taux** : graphique 7 / 30 / 90 jours par couloir (SVG, sans dépendance).
+- **Partage** : lien profond pré-rempli (`?mode`, `?amount`/`?target`) + partage WhatsApp.
+- **Alertes de taux (beta)** : capture email par couloir/montant via `POST /api/alerts`.
+- **Confiance** : badge « Classement 100 % indépendant » + FAQ SEO par couloir (JSON-LD).
+
+### Alertes de taux — câblage production
+
+`POST /api/alerts` valide et journalise les demandes (capture fiable via les logs)
+et tente une persistance best-effort. La **délivrance** des notifications reste à
+brancher :
+
+1. Stocker les abonnements dans un store durable (Vercel KV / Postgres).
+2. Comparer, dans le cron `fetch-rates`, le meilleur coût réel au seuil abonné.
+3. Envoyer via un fournisseur (`RESEND_API_KEY` pour l'email, WhatsApp Business API).
+
 ## Couche données
 
 Les scripts produisent des fichiers dans `data/` (ignorés par git). En leur
