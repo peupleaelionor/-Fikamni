@@ -1,41 +1,40 @@
 {
-  "brand": {
-    "name": "Fikamni",
-    "tagline": "L'argent qui arrive, en entier, chez les siens."
-  },
-  "hero": {
-    "eyebrow": "MVP comparateur diaspora",
-    "title": "Comparez le vrai coût de vos transferts en quelques secondes.",
-    "description": "Fikamni classe les offres selon le coût réel: frais visibles + marge de change + frais côté réception."
-  },
   "controls": {
     "language": "Langue",
-    "corridor": "Couloir",
+    "from": "Pays d'envoi",
+    "to": "Pays de réception",
     "amount": "Montant envoyé",
-    "amountHint": "Montant débité hors calculateur: modifiable instantanément",
-    "reset": "Réinitialiser"
+    "amountHint": "Modifiez le montant : le classement se recalcule instantanément.",
+    "reset": "Réinitialiser le montant"
   },
   "summary": {
-    "results": "offres comparées",
+    "results": "Offres comparées",
     "best": "Meilleure offre",
+    "none": "Aucune offre disponible",
     "send": "Vous envoyez",
     "receive": "Montant reçu"
   },
   "offer": {
     "realCost": "Coût réel",
-    "directFees": "Frais visibles",
     "hiddenFx": "Coût caché du change",
     "receiveFees": "Frais réception",
     "debited": "Montant débité",
-    "effectiveRate": "Taux effectif",
     "speed": "Délai",
     "method": "Retrait / réception",
     "bestBadge": "Meilleur rapport coût / réception",
-    "marketMax": "Maximum au taux du marché"
+    "marketMax": "Maximum au taux du marché",
+    "cta": "Voir l'offre",
+    "affiliateNote": "Divulgation : certains liens « Voir l'offre » sont des liens d'affiliation. Fikamni peut percevoir une commission, sans surcoût pour vous et sans incidence sur le classement."
   },
   "payout": {
     "bank": "Virement bancaire",
     "cash": "Retrait cash",
     "mobile": "Wallet mobile"
+  },
+  "data": {
+    "updated": "Dernière mise à jour",
+    "sourceDemo": "Données de démonstration (non temps réel)",
+    "sourceRates": "Taux",
+    "sourceTariffs": "Tarifs"
   }
 }
